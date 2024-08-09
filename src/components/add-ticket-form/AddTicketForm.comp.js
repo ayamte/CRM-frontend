@@ -13,6 +13,7 @@ const AddTicketForm = ({ handleOnSubmit, handleOnChange, frmDt }) => {
       <Form autoComplete="off" onSubmit={handleOnSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>Subject</Form.Label>
+          <Col sm={9}>
           <Form.Control
             name="subject"
             value ={frmDt.subject}
@@ -20,6 +21,7 @@ const AddTicketForm = ({ handleOnSubmit, handleOnChange, frmDt }) => {
             placeholder="Enter Subject"
             required
           />
+          </Col>
         </Form.Group>
 
         <Form.Group as={Row} className="mb-3">
