@@ -1,25 +1,33 @@
-import React from 'react'
-import {Navbar, Nav, NavbarBrand} from 'react-bootstrap'
-import logo from '../../assets/img/logo.png'
-
-
+import React from 'react';
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import logo from '../../assets/img/logo.png';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
-  return (
-    <Navbar collapseOnSelect variant="dark" bg="info" expand="md">
-      <Navbar.Brand>
-        <img src={logo} all="logo" width="100px"/>
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ms-auto">
-          <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-          <Nav.Link href="/tickets">Tickets</Nav.Link>
-          <Nav.Link href="/logout">Logout</Nav.Link>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
-  )
-}
+  const navigate = useNavigate();
 
-export default Header
+  const logMeOut = () => {
+    navigate('/');
+  };
+
+  return (
+    <Navbar collapseOnSelect expand="md" bg="info" variant="dark">
+      <Container>
+        <Navbar.Brand>
+          <img src={logo} alt="logo" width="100px" />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="ms-auto">
+            <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+            <Nav.Link as={Link} to="/tickets">Tickets</Nav.Link>
+            <Nav.Link onClick={logMeOut}>Logout</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+};
+
+export default Header;

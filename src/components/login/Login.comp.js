@@ -23,7 +23,7 @@ export const LoginForm = ({handleOnChange, handleOnSubmit, frmSwitcher, email, p
              
             />
           </Form.Group>
-          <Form.Group>
+          <Form.Group className='mt-3'>
             <Form.Label>Password</Form.Label>
             <Form.Control
              type="password"
@@ -37,7 +37,7 @@ export const LoginForm = ({handleOnChange, handleOnSubmit, frmSwitcher, email, p
           </Form.Group>
 
 
-          <Button type="submit">Login</Button>
+          <Button className="mt-3" type="submit">Login</Button>
         </Form>
         <hr/>
         </Col>

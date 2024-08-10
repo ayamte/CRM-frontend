@@ -6,9 +6,7 @@ import {LoginForm} from '../../components/login/Login.comp';
 import './entry.style.css';
 
 
-
-
-export const Entry = () => {
+const Entry = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [frmLoad, setFrmLoad] = useState("login");
@@ -72,5 +70,7 @@ export const Entry = () => {
         
       </div>
     </Container>
-  </div>;
+  </div>
 };
+
+export default Entry
