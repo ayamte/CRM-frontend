@@ -1,5 +1,7 @@
-// TicketLists.page.js
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from "react-redux";
+import { fetchAllTickets } from "./ticketAction";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import PageBreadcrumb from '../../components/breadcrumb/Breadcrumb.comp';
 import SearchForm from '../../components/search-form/SearchForm.comp';
@@ -8,21 +10,17 @@ import tickets from '../../assets/data/dummy-tickets.json';
 import { Link } from "react-router-dom";
 
 const TicketLists = () => {
+  const dispatch = useDispatch();
+
   const [str, setStr] = useState('');
-  const [dispTicket, setDispTicket] = useState(tickets);
 
-  const handleOnChange = (e) => {
-    const { value } = e.target;
-    setStr(value);
-    searchTicket(value);
-  };
+  useEffect(()=>{
+    dispatch(fetchAllTickets());
+  }, [str, dispatch]);
 
-  const searchTicket = (searchStr) => {
-    const displayTickets = tickets.filter((row) =>
-      row.subject.toLowerCase().includes(searchStr.toLowerCase())
-    );
-    setDispTicket(displayTickets);
-  };
+ 
+
+  
 
   return (
     <Container>
@@ -38,13 +36,13 @@ const TicketLists = () => {
           </Link>
         </Col>
         <Col className='text-right'>
-          <SearchForm handleOnChange={handleOnChange} str={str} />
+          <SearchForm />
         </Col>
       </Row>
       <hr />
       <Row>
         <Col>
-          <TicketTable tickets={dispTicket} />
+          <TicketTable/>
         </Col>
       </Row>
     </Container>

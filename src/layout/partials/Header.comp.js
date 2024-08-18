@@ -8,8 +8,11 @@ const Header = () => {
   const navigate = useNavigate();
 
   const logMeOut = () => {
+    sessionStorage.removeItem('accessJWT');
     navigate('/');
   };
+
+  
 
   return (
     <Navbar collapseOnSelect expand="md" bg="info" variant="dark">
