@@ -108,3 +108,29 @@ export const updateTicketStatusClosed = async (_id) => {
     throw error;
   }
 };
+
+export const createNewTicket  = async (frmData) => {
+  console.log("from api", frmData);
+  try {
+    const accessJWT = sessionStorage.getItem("accessJWT");
+    
+    if (!accessJWT) {
+      throw new Error("No access token found");
+    }
+
+    const result = await axios.post(
+      `http://localhost:3001/v1/ticket`,
+      frmData, 
+      {
+      headers: {
+        Authorization: `Bearer ${accessJWT}`,
+      },
+    });
+    console.log("API response:", result.data);
+    return result.data;
+  } catch (error) {
+    // throw error;
+    console.error("Error in getAllTickets:", error.response ? error.response.data : error.message);
+    throw error;
+  }
+};

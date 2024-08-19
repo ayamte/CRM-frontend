@@ -5,11 +5,11 @@ const initialState ={
   tickets: [],
   isLoading: false,
   error: '',
-  // replyTicketError: "",
+  replyTicketError: "",
   searchTicketList: [],
   selectedTicket: {},
-  replyMsg: '',
-  closeTicketMsg: ""
+  replyMsg: "",
+  closeTicketMsg: "",
 };
 
 const ticketListSlice = createSlice({
@@ -71,11 +71,11 @@ const ticketListSlice = createSlice({
       state.isLoading = false;
       state.error = payload;
     },
-    // resetResponseMsg: (state) => {
-    //   state.isLoading = false;
-    //   state.replyTicketError = "";
-    //   state.replyMsg = "";
-    // },
+    resetResponseMsg: (state) => {
+      state.isLoading = false;
+      state.replyTicketError = "";
+      state.replyMsg = "";
+    },
   },
 
 });
@@ -99,7 +99,7 @@ export const {
   closeTicketLoading,
   closeTicketSuccess,
   closeTicketFail,
-  // resetResponseMsg,
+  resetResponseMsg,
 } = actions;
 
 export default reducer;

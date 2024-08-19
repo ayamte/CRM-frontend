@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
 import PageBreadcrumb from '../../components/breadcrumb/Breadcrumb.comp';
@@ -13,15 +13,26 @@ const Ticket = () => {
 
 
   const dispatch = useDispatch();
-  const {isLoading, error, selectedTicket, replyMsg,closeTicketMsg} = useSelector((state) =>state.tickets);
+  const {isLoading,
+         error, 
+         selectedTicket, 
+         replyMsg, 
+         closeTicketMsg, 
+         replyTicketError
+      } = useSelector((state) =>state.tickets);
 
   const {tId} = useParams();
 
 
 
-  useEffect(() =>{
+  useEffect(() => {
     dispatch(fetchSingleTicket(tId));
+    return () => {
+      dispatch({ type: 'RESET_TICKETS_MESSAGES' }); 
+    };
   }, [tId, dispatch]);
+
+  
 
 
   return (
@@ -36,6 +47,7 @@ const Ticket = () => {
           <Col>
           {closeTicketMsg && <Alert variant="success">{closeTicketMsg}</Alert>}
             {replyMsg && <Alert variant="success">{replyMsg}</Alert>}
+            {replyTicketError && <Alert variant="danger">{replyTicketError}</Alert>}
             {isLoading && <Spinner variant='primary' animation="border"/>}
             {error && <Alert variant="danger">{error}</Alert>}
           </Col>
