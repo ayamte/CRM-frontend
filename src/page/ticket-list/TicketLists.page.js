@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { fetchAllTickets } from "./ticketAction";
 import { Container, Row, Col, Button } from "react-bootstrap";
@@ -12,11 +12,10 @@ import { Link } from "react-router-dom";
 const TicketLists = () => {
   const dispatch = useDispatch();
 
-  const [str, setStr] = useState('');
 
   useEffect(()=>{
     dispatch(fetchAllTickets());
-  }, [str, dispatch]);
+  }, [dispatch]);
 
  
 

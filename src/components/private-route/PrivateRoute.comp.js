@@ -22,13 +22,10 @@ const PrivateRoute = () => {
 
 		// !user._id && dispatch(getUserProfile());
 
-		// !sessionStorage.getItem("accessJWT") &&
-		// 	localStorage.getItem("crmSite") &&
-			updateAccessJWT();
+		!sessionStorage.getItem("accessJWT") && localStorage.getItem("crmSite") && updateAccessJWT();
 
-		// !isAuth && sessionStorage.getItem("accessJWT") && dispatch(loginSuccess());
-    sessionStorage.getItem("accessJWT") && dispatch(loginSuccess());
-	}, [dispatch]);
+		!isAuth && sessionStorage.getItem("accessJWT") && dispatch(loginSuccess());
+	}, [dispatch, isAuth]);
 
   return isAuth ? (
     <DefaultLayout>
