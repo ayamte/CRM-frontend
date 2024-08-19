@@ -1,35 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import { Container, Row, Col, Button } from "react-bootstrap";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
 import PageBreadcrumb from '../../components/breadcrumb/Breadcrumb.comp';
-import tickets from '../../assets/data/dummy-tickets.json';
 import MessageHistory from '../../components/message-history/MessageHistory.comp';
 import UpdateTicket from '../../components/update-ticket/UpdateTicket.comp';
 import { useParams } from "react-router-dom";
+import { closeTicket, fetchSingleTicket } from '../ticket-list/ticketAction';
 
-// const ticket = tickets[0]
+
 
 const Ticket = () => {
 
-  const {tId} = useParams()
 
-  const [message, setMessage] = useState('');
-  const [ticket, setTicket] = useState('');
+  const dispatch = useDispatch();
+  const {isLoading, error, selectedTicket, replyMsg,closeTicketMsg} = useSelector((state) =>state.tickets);
+
+  const {tId} = useParams();
+
+
 
   useEffect(() =>{
-    for(let i=0; i < tickets.length; i++){
-      if(tickets[i].id == tId ){
-        setTicket(tickets[i])
-        continue
-      }}
-  }, [message, tId]);
+    dispatch(fetchSingleTicket(tId));
+  }, [tId, dispatch]);
 
-  const handelOnChange = (e) =>{
-    setMessage(e.target.value);
-  };
-
-  const handleOnSubmit =()=>{
-    alert('Form submited!')
-  }
 
   return (
     <div>
@@ -39,28 +32,40 @@ const Ticket = () => {
             <PageBreadcrumb page="Ticket"/>
           </Col>
         </Row>
+        <Row>
+          <Col>
+          {closeTicketMsg && <Alert variant="success">{closeTicketMsg}</Alert>}
+            {replyMsg && <Alert variant="success">{replyMsg}</Alert>}
+            {isLoading && <Spinner variant='primary' animation="border"/>}
+            {error && <Alert variant="danger">{error}</Alert>}
+          </Col>
+        </Row>
         <Row className="mt-4">
           <Col className='font-weight-bold text-secondary'>
-            <div className='subject'>subject:  {ticket.subject} </div>
-            <div className='date'>Date:  {ticket.addedAt}</div>
-            <div className='status'>Status:  {ticket.status}</div>
+            <div className='subject'>subject:  {selectedTicket.subject} </div>
+            <div className='date'>
+                Ticket Opened:{" "}
+                {selectedTicket.openAt && new Date(selectedTicket.openAt).toLocaleString()}
+             </div>
+            <div className='status'>Status:  {selectedTicket.status}</div>
           </Col>
           <Col className='d-flex justify-content-end'>
-            <Button variant="outline-info">Close Ticket</Button>
+            <Button variant="outline-info" onClick={() => dispatch(closeTicket(tId))}
+						disabled={selectedTicket.status === "Closed"}>
+              Close Ticket
+            </Button>
           </Col>
         </Row>
         <Row className='mt-4'>
           <Col>
-          {ticket.history && <MessageHistory msg={ticket.history} />}
+          {selectedTicket.conversations && <MessageHistory msg={selectedTicket.conversations} />}
           </Col>
         </Row>
         <hr/>
         <Row className='mt-4'>
           <Col>
           <UpdateTicket 
-              msg={message} 
-              handelOnChange={handelOnChange}
-              handleOnSubmit={handleOnSubmit}
+              _id={tId}
               />
           </Col>
         </Row>
