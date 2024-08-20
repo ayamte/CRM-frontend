@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types'
 import  {Container, Row, Col, Form, Button, Spinner, Alert} from 'react-bootstrap'
 import { useDispatch, useSelector } from "react-redux";
@@ -17,12 +17,13 @@ export const LoginForm = ({frmSwitcher}) => {
 
   const {isLoading, isAuth, error} = useSelector(state => state.login);
 
-  // useEffect(() => {
-	// 	sessionStorage.getItem("accessJWT") && history.replace(from);
-	// }, [history, isAuth]);
+  useEffect(() => {
+	 sessionStorage.getItem("accessJWT") && 
+   navigate("/dashboard");
+	}, [navigate, isAuth]);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("e4@e.com");
+  const [password, setPassword] = useState("password");
   
 
   const handleOnChange = (e) =>{
@@ -110,11 +111,20 @@ export const LoginForm = ({frmSwitcher}) => {
         <hr/>
         </Col>
       </Row>
+
       <Row>
         <Col>
           <a href="#!" onClick ={()=> frmSwitcher('reset')}>Forget Password?</a>
         </Col>
+      </Row>
 
+      <Row className = "py-4" >
+        <Col>
+        Are you new here? {' '}
+          <a href="/registration">
+            Register Now
+          </a>
+        </Col>
       </Row>
 
     </Container>

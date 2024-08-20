@@ -5,7 +5,11 @@ const initialState ={
   tickets: [],
   isLoading: false,
   error: '',
-  searchTicketList: []
+  replyTicketError: "",
+  searchTicketList: [],
+  selectedTicket: {},
+  replyMsg: "",
+  closeTicketMsg: "",
 };
 
 const ticketListSlice = createSlice({
@@ -31,6 +35,48 @@ const ticketListSlice = createSlice({
         return row.subject.toLowerCase().includes(payload.toLowerCase());
       });
     },
+    fetchSingleTicketLoading: (state) => {
+      state.isLoading = true;
+    },
+    fetchSingleTicketSuccess: (state, { payload }) => {
+      state.selectedTicket = payload;
+      state.isLoading = false;
+      state.error = "";
+    },
+    fetchSingleTicketFail: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+    replyTicketLoading: (state) => {
+      state.isLoading = true;
+    },
+    replyTicketSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = "";
+      state.replyMsg = payload;
+    },
+    replyTicketFail: (state, { payload }) => {
+      state.isLoading = false;
+      state.replyTicketError = payload;
+    },
+    closeTicketLoading: (state) => {
+      state.isLoading = true;
+    },
+    closeTicketSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = "";
+      state.closeTicketMsg = payload;
+    },
+    closeTicketFail: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+    resetResponseMsg: (state) => {
+      state.isLoading = false;
+      state.replyTicketError = "";
+      state.replyMsg = "";
+      state.closeTicketMsg= "";
+    },
   },
 
 });
@@ -45,6 +91,16 @@ export const {
   fetchTicketSuccess,
   fetchTicketFail,
   searchTickets,
+  fetchSingleTicketLoading,
+  fetchSingleTicketSuccess,
+  fetchSingleTicketFail,
+  replyTicketLoading,
+  replyTicketSuccess,
+  replyTicketFail,
+  closeTicketLoading,
+  closeTicketSuccess,
+  closeTicketFail,
+  resetResponseMsg,
 } = actions;
 
 export default reducer;

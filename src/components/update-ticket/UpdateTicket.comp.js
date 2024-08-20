@@ -1,9 +1,39 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
+import { useSelector, useDispatch } from 'react-redux';
+import { replyOnTicket } from '../../page/ticket-list/ticketAction';
 
-const UpdateTicket = ({msg, handelOnChange, handleOnSubmit}) => {
+
+
+const UpdateTicket = ({_id}) => {
+
+
+  const dispatch = useDispatch();
+  const {user:{name}} = useSelector((state) => state.user);
+
+  const [message, setMessage] = useState('');
+
+  const handelOnChange = (e) =>{
+    setMessage(e.target.value);
+  };
+
+  const handleOnSubmit =(e)=>{
+    e.preventDefault();
+    const msgObj = {
+      message,
+      sender: name,
+
+    };
+
+    dispatch(replyOnTicket(_id, msgObj));
+    setMessage("");
+  };
+
+
   return (
+  <div>
+    
     <Form onSubmit={handleOnSubmit} >
 
       <div className="d-flex flex-column">
@@ -12,7 +42,7 @@ const UpdateTicket = ({msg, handelOnChange, handleOnSubmit}) => {
       </div>
 
       <Form.Control
-      value={msg}
+      value={message}
       onChange={handelOnChange}
       as="textarea"
       row="5"
@@ -22,16 +52,13 @@ const UpdateTicket = ({msg, handelOnChange, handleOnSubmit}) => {
       <div className='d-flex justify-content-end mt-5' >
         <Button variant="info" type="submit" >Reply</Button>
       </div>
-      
-
     </Form>
+  </div>
   )
 }
 
 export default UpdateTicket
 
 UpdateTicket.propTypes = {
-  msg: PropTypes.string.isRequired,
-  handelOnChange: PropTypes.func.isRequired,
-  handleOnSubmit: PropTypes.func.isRequired,
+  _id: PropTypes.string.isRequired,
 }

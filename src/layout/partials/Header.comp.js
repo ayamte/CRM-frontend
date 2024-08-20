@@ -3,16 +3,18 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import logo from '../../assets/img/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { userLogout } from '../../api/userApi';
 
 const Header = () => {
   const navigate = useNavigate();
 
   const logMeOut = () => {
     sessionStorage.removeItem('accessJWT');
+    localStorage.removeItem('crmSite');
+    userLogout();
     navigate('/');
   };
 
-  
 
   return (
     <Navbar collapseOnSelect expand="md" bg="info" variant="dark">

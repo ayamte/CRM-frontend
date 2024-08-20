@@ -33,7 +33,7 @@ const TicketTable = () => {
           </td>
 
           <td>{row.status}</td>
-          <td>{row.openAt}</td>
+          <td>{row.openAt && new Date(row.openAt).toLocaleString()}</td>
         </tr>)) : 
         <tr>
         <td colSpan="4" className="text-center">No ticket to saw</td>

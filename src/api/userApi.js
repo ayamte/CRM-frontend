@@ -5,7 +5,45 @@ const rootUrl = "http://localhost:3001/v1/";
 const loginUrl = rootUrl + "user/login";
 const userProfileUrl = rootUrl + "user";
 const logoutUrl = rootUrl + "user/logout";
+const newAccessJWT = rootUrl + "tokens";
 
+
+export const userRegistration = async (frmData) => {
+  try {
+    const res = await axios.post(userProfileUrl, frmData);
+
+    if (res.data.status === "success") {
+      return res.data;
+    } else {
+      throw new Error(res.data.message || 'Registration failed');
+    }
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      if (error.response.data.message.includes('E11000 duplicate key error')) {
+        throw new Error('Email address is already in use.');
+      }
+      throw new Error(error.response.data.message);
+    }
+    throw new Error('Something went wrong');
+  }
+};
+
+
+
+// export const userRegistrationVerification = (frmData) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       const res = await axios.patch(userVerificationUrl, frmData);
+
+//       resolve(res.data);
+//       if (res.data.status === "success") {
+//         resolve(res.data);
+//       }
+//     } catch (error) {
+//       reject({ status: "error", message: error.error });
+//     }
+//   });
+// };
 
 export const userLogin = async (frmData) => {
   try {
@@ -22,8 +60,6 @@ export const userLogin = async (frmData) => {
       );
     }
 
-    console.log("Login response:", res.data);
-    // Return the response data after storing tokens
     return res.data;
 
   } catch (error) {
@@ -56,6 +92,37 @@ export const fetchUser = async () => {
     throw error;
   }
 };
+
+export const fetchNewAccessJWT = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { refreshJWT } = JSON.parse(localStorage.getItem("crmSite"));
+
+      if (!refreshJWT) {
+        reject("Token not found!");
+      }
+
+      const res = await axios.get(newAccessJWT, {
+        headers: {
+          Authorization: refreshJWT,
+        },
+      });
+
+      if (res.data.status === "success") {
+        sessionStorage.setItem("accessJWT", res.data.accessJWT);
+      }
+
+      resolve(true);
+    } catch (error) {
+      if (error.message === "Request failed with status code 403") {
+        localStorage.removeItem("crmSite");
+      }
+
+      reject(false);
+    }
+  });
+};
+
 
 
 export const userLogout = async () => {
