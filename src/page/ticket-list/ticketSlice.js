@@ -75,6 +75,7 @@ const ticketListSlice = createSlice({
       state.isLoading = false;
       state.replyTicketError = "";
       state.replyMsg = "";
+      state.closeTicketMsg= "";
     },
   },
 

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col, Container, Alert, Spinner } from "react-bootstrap";
 import './add-ticket-form.style.css';
 import { shortText } from '../../utils/validation';
 import { useDispatch, useSelector } from 'react-redux';
 import { openNewTicket } from './addTicketAction';
+import { restSuccessMSg } from "./addTicketSlicer";
 
 
 const initialFrmDt = {
@@ -30,11 +31,11 @@ const AddTicketForm = () => {
   const [frmData, setFrmData] = useState(initialFrmDt);
   const [frmDataError, setFrmDataError] = useState(initialFrmError);
 
-  // useEffect(() => {
-  //   return () => {
-  //     successMsg && dispatch(restSuccessMSg());
-  //   };
-  // }, [dispatch, frmData, frmDataErro]);
+  useEffect(() => {
+    return () => {
+      successMsg && dispatch(restSuccessMSg());
+    };
+  }, [dispatch, frmData, frmDataError]);
 
   const handleOnChange = e => {
     const { name, value } = e.target;

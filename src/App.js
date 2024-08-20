@@ -11,6 +11,7 @@ import AddTicket from "./page/new ticket/AddTicket.page";
 import TicketLists from "./page/ticket-list/TicketLists.page";
 import Ticket from "./page/ticket/Ticket.page";
 import PrivateRoute from "./components/private-route/PrivateRoute.comp";
+import { Registration } from "./page/registration/Registration.page";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           {/* Route publique */}
           <Route path="/" element={<Entry />} />
+          <Route path="/registration" element={<Registration />} />
 
           {/* Routes protégées */}
           <Route element={<PrivateRoute />}>

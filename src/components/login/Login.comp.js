@@ -111,11 +111,20 @@ export const LoginForm = ({frmSwitcher}) => {
         <hr/>
         </Col>
       </Row>
+
       <Row>
         <Col>
           <a href="#!" onClick ={()=> frmSwitcher('reset')}>Forget Password?</a>
         </Col>
+      </Row>
 
+      <Row className = "py-4" >
+        <Col>
+        Are you new here? {' '}
+          <a href="/registration">
+            Register Now
+          </a>
+        </Col>
       </Row>
 
     </Container>

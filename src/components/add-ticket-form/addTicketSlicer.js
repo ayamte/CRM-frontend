@@ -20,10 +20,10 @@ const newTicketSlice = createSlice({
       state.isLoading = true;
       state.error = payload;
     },
-    // restSuccessMSg: (state) => {
-    //   state.isLoading = true;
-    //   state.successMsg = "";
-    // },
+    restSuccessMSg: (state) => {
+      state.isLoading = false;
+      state.successMsg = "";
+    },
   },
 });
 
@@ -31,7 +31,7 @@ export const {
   openNewTicketPending,
   openNewTicketSuccess,
   openNewTicketFail,
-  // restSuccessMSg,
+  restSuccessMSg,
 } = newTicketSlice.actions;
 
 

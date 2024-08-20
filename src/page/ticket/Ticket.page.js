@@ -6,6 +6,7 @@ import MessageHistory from '../../components/message-history/MessageHistory.comp
 import UpdateTicket from '../../components/update-ticket/UpdateTicket.comp';
 import { useParams } from "react-router-dom";
 import { closeTicket, fetchSingleTicket } from '../ticket-list/ticketAction';
+import { resetResponseMsg } from '../ticket-list/ticketSlice';
 
 
 
@@ -28,9 +29,9 @@ const Ticket = () => {
   useEffect(() => {
     dispatch(fetchSingleTicket(tId));
     return () => {
-      dispatch({ type: 'RESET_TICKETS_MESSAGES' }); 
+      (replyMsg || replyTicketError || closeTicketMsg) && dispatch(resetResponseMsg()); 
     };
-  }, [tId, dispatch]);
+  }, [tId, dispatch, replyMsg, replyTicketError, closeTicketMsg ]);
 
   
 
