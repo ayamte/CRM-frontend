@@ -8,6 +8,43 @@ const logoutUrl = rootUrl + "user/logout";
 const newAccessJWT = rootUrl + "tokens";
 
 
+export const userRegistration = async (frmData) => {
+  try {
+    const res = await axios.post(userProfileUrl, frmData);
+
+    if (res.data.status === "success") {
+      return res.data;
+    } else {
+      throw new Error(res.data.message || 'Registration failed');
+    }
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      if (error.response.data.message.includes('E11000 duplicate key error')) {
+        throw new Error('Email address is already in use.');
+      }
+      throw new Error(error.response.data.message);
+    }
+    throw new Error('Something went wrong');
+  }
+};
+
+
+
+// export const userRegistrationVerification = (frmData) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       const res = await axios.patch(userVerificationUrl, frmData);
+
+//       resolve(res.data);
+//       if (res.data.status === "success") {
+//         resolve(res.data);
+//       }
+//     } catch (error) {
+//       reject({ status: "error", message: error.error });
+//     }
+//   });
+// };
+
 export const userLogin = async (frmData) => {
   try {
     const res = await axios.post(loginUrl, frmData);

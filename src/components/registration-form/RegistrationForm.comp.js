@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Row, Form } from 'react-bootstrap';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { newUserRegistration } from "./userRegAction";
 
 
 const initialState = {
-  name: "",
-  phone: "",
-  email: "",
-  company: "",
-  address: "",
-  password: "",
-  confirmPass: "",
+  name: "Aya",
+  phone: "0612345678",
+  email: "aya@gmail.com",
+  company: "munisys",
+  address: "rabat",
+  password: "Pass_2468",
+  confirmPass: "Pass_2468",
 };
 
 const passVerificationError = {
@@ -23,7 +24,7 @@ const passVerificationError = {
 };
 
 const RegistrationForm = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [newUser, setNewUser] = useState(initialState);
   const [passwordError, setPasswordError] = useState(passVerificationError);
 
@@ -43,7 +44,7 @@ const RegistrationForm = () => {
       const hasUpper = /[A-Z]/.test(value);
       const hasLower = /[a-z]/.test(value);
       const hasNumber = /[0-9]/.test(value);
-      const hasSpclChr = /[@#$%&-_]/.test(value);
+      const hasSpclChr = /[@#$%&]/.test(value);
 
       setPasswordError({
         ...passwordError,
@@ -65,18 +66,18 @@ const RegistrationForm = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log(newUser);
-    // const { name, phone, email, company, address, password } = newUser;
+    const { name, phone, email, company, address, password } = newUser;
 
-    // const newRegistration = {
-    //   name,
-    //   phone,
-    //   email,
-    //   company,
-    //   address,
-    //   password,
-    // };
-    // dispatch(newUserRegistration(newRegistration));
+    const newRegistration = {
+      name,
+      phone,
+      email,
+      company,
+      address,
+      password,
+    };
+    console.log(newRegistration);
+    dispatch(newUserRegistration(newRegistration));
   };
 
   return (
